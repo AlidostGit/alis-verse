@@ -19,7 +19,7 @@ export const PROFILE = {
     'Product-minded technical lead who builds first and manages second. Uses AI daily to prototype, analyse data and automate workflows. Five years at Motive (formerly KeepTruckin) in customer-facing technical roles, then AI forecasting at Music Tribe, and now Technical Lead at The Waste Lab.',
 } as const
 
-export type LandmarkId = 'welcome' | 'roots' | 'motive' | 'musictribe' | 'wastelab' | 'projects' | 'learning' | 'play'
+export type LandmarkId = 'welcome' | 'roots' | 'motive' | 'musictribe' | 'wastelab' | 'projects' | 'learning' | 'play' | 'ai'
 
 export type Role = {
   title: string
@@ -75,8 +75,19 @@ export const LANDMARKS: readonly Landmark[] = [
         ],
       },
       {
+        title: "The short version of who's up here",
+        org: 'Multan \u2192 Islamabad \u2192 Dubai',
+        dates: '',
+        points: [
+          'Electrical engineer who discovered that fixing a classmate\u2019s laptop and fixing a Fortune 500 integration use the exact same muscle: listen first, then simplify.',
+          'Five roles, one belief underneath all of them: systems do not fail, people do, so build the system that makes the right thing the easy thing.',
+          'Picked problems over titles. Has been a lecturer, a QA analyst, a support lead and a product owner, roughly in that order, because each one taught the next.',
+          'Still answers messages at odd hours, because the waste truck does not wait for a sprint planning meeting.',
+        ],
+      },
+      {
         title: 'How to explore',
-        org: 'Seven landmarks on this hill',
+        org: 'Eight landmarks on this hill',
         dates: '',
         points: [
           'Each landmark is a chapter of the career. Walk up to one and press E to open it.',
@@ -227,10 +238,21 @@ export const LANDMARKS: readonly Landmark[] = [
     intro:
       'A terminal still humming with charts. Here an AI forecasting and automation system learned to predict demand across thousands of products and global sites.',
     story: {
-      tale: 'Forecasting 3,800 products taught Ali that the future is uncertain, but with Prophet and TSB it is at least uncertain with confidence intervals. Translating "the numbers feel wrong" from Finance into acceptance criteria was the hardest model of all.',
+      tale: 'Forecasting 3,800 products taught Ali that the future is uncertain, but with Prophet and TSB it is at least uncertain with confidence intervals. Translating "the numbers feel wrong" from Finance into acceptance criteria was the hardest model of all. Before any of that, there was a five-month warm-up: ERP whisperer, act one. Act two had more Azure Functions and fewer spreadsheets held together by hope.',
       learned: 'Technical project management for real: writing requirements with Finance, supply chain and BI, mapping messy processes, and staying the bridge between business users and developers long after the launch party.',
     },
     roles: [
+      {
+        title: 'IT Associate - Systems and Applications Support (Consulting)',
+        org: 'House and Hedges Real Estate',
+        dates: 'Sep 2024 - Jan 2025',
+        place: 'UAE, on-site',
+        points: [
+          'Built API data pipelines and KPI dashboards that replaced "check three spreadsheets and pray" with one source of truth.',
+          'Implemented Dolibarr ERP for HR, taking employee records fully paperless.',
+          'Scripted lead-data retrieval in Google Colab and built the scoring logic behind it.',
+        ],
+      },
       {
         title: 'Performance Division Leader, Technical Project Management (AI)',
         org: 'Music Tribe',
@@ -480,6 +502,48 @@ export const LANDMARKS: readonly Landmark[] = [
     ],
     skills: ['Curiosity', 'Systems design', 'Prototyping', 'Play'],
     color: '#f0b429',
+  },
+  {
+    id: 'ai',
+    label: 'Signal beacon',
+    verb: 'Touch the signal beacon',
+    kicker: 'Chapter 8 · Where this goes next',
+    heading: 'Building in the age of AI',
+    intro:
+      "A beacon that wasn't here a year ago. It hums faintly, like the rest of the industry does right now. This is where Ali stands in that hum, and where he's walking next.",
+    story: {
+      tale: 'Every year of Ali\u2019s career got absorbed by the next big shift: ELDs, then ERP forecasting, now agents that write half the code and all of the first draft. He did not resist any of them. He just kept asking one annoying question: does this make the human\u2019s next step easier, or just busier?',
+      learned: 'AI is not a department, it is a tool on the same shelf as a terminal and a signpost. The craft is still the same: understand the system, remove the friction, ship the thing that actually gets used.',
+    },
+    roles: [
+      {
+        title: 'How I use it today',
+        org: 'Daily practice',
+        dates: 'Now',
+        points: [
+          'Prototypes products, analyses data and automates workflows with AI before writing a single formal spec.',
+          'Built this hill with it: 3D model wrangling, shader debugging and a portfolio with opinions, all shipped faster with an AI pair.',
+          'Treats every AI output as a first draft from a very fast, occasionally overconfident intern: useful, never final.',
+        ],
+      },
+      {
+        title: "Where I'm headed",
+        org: 'The honest part',
+        dates: 'Next',
+        points: [
+          'Wants AI doing the grunt work so humans do the judgment calls on sustainability operations.',
+          'Betting his career on staying the person who understands both the model and the mess it is modelling, not choosing one over the other.',
+          'If the agents get good enough to build the hill themselves, he still wants to be the one deciding which hill is worth building.',
+        ],
+      },
+    ],
+    stats: [
+      { value: 'AI-native', label: 'way of building' },
+      { value: '3', label: 'eras survived (ELDs, ERP, agents)' },
+      { value: 'Daily', label: 'driver' },
+    ],
+    skills: ['AI-native building', 'Prompt engineering', 'Rapid prototyping', 'Judgment over automation', 'Staying curious'],
+    color: '#8a5cf6',
   },
 ]
 

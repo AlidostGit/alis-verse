@@ -1,7 +1,7 @@
 {
   "game.title": "Ali's Verse",
   "game.subtitle": "Explore Ali Dost's Career",
-  "game.tagline": "A first-person walk through a career in tech. Cross the cloud-sea hilltop, find eight landmarks, and press E to open the story behind each one.",
+  "game.tagline": "A first-person walk through a career in tech. Cross the cloud-sea hilltop, find nine landmarks, and press E to open the story behind each one.",
   "boot.loading": "Unfurling the sea of clouds",
   "boot.failed": "Ali's Verse could not load. Check your connection, or try a browser with WebGL2 support.",
   "boot.retry": "Try again",
@@ -31,7 +31,7 @@
   "caption.ruin": "Grass has climbed onto its round head and shoulders. The guardian has sat here longer than anyone can say.",
   "caption.critter": "It has waited here a long time. It is not afraid of you.",
   "caption.edge": "Beyond this, only the sea of clouds.",
-  "caption.arrive": "Eight chapters of Ali's career are scattered over this hill. Start at the stone ahead, then follow the compass.",
+  "caption.arrive": "Nine chapters of Ali's career are scattered over this hill. Start at the stone ahead, then follow the compass.",
   "settings.title": "Settings",
   "settings.audio": "Sound",
   "settings.music": "Music",

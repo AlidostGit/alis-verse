@@ -3,8 +3,8 @@ import { CHAPTERS, LANDMARKS, PROFILE, landmark } from '../src/game/portfolio'
 import { PLACEMENTS } from '../src/game/landmarks'
 
 describe('portfolio content', () => {
-  test('eight chapters with unique ids, colours and complete roles', () => {
-    expect(CHAPTERS).toEqual(['welcome', 'roots', 'motive', 'musictribe', 'wastelab', 'projects', 'learning', 'play'])
+  test('nine chapters with unique ids, colours and complete roles', () => {
+    expect(CHAPTERS).toEqual(['welcome', 'roots', 'motive', 'musictribe', 'wastelab', 'projects', 'learning', 'play', 'ai'])
     expect(new Set(LANDMARKS.map(l => l.color)).size).toBe(LANDMARKS.length)
     for (const l of LANDMARKS) {
       expect(l.heading.length).toBeGreaterThan(3)

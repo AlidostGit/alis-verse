@@ -36,6 +36,7 @@ export const PLACEMENTS: readonly Placement[] = [
   { id: 'play', model: 'gamepad', x: -1.5, z: -16.5, size: 1.7, lift: 1.3, yawOffset: 0, float: true, reach: 5.2 },
   { id: 'learning', model: 'bookshelf', x: 12.5, z: -9.5, size: 2.9, lift: 0, yawOffset: -Math.PI / 2, reach: 5.5 },
   { id: 'wastelab', model: 'truck', x: 18.5, z: 11.5, size: 5.4, lift: 0, yawOffset: 0, reach: 7 },
+  { id: 'ai', x: 18.7, z: -1, size: 1.6, lift: 1.5, yawOffset: 0, float: true, reach: 5.2 },
 ]
 
 /** The meadow point each landmark turns toward (between the spawn and the guardian). */
@@ -70,7 +71,7 @@ export class Landmarks {
         holder.position.set(p.x, ground + p.lift, p.z)
         holder.rotation.y = yaw
         this.group.add(holder)
-        const obj = src ? this.fit(src.clone(true), p.size) : this.placeholder(p.size, landmark(p.id).color)
+        const obj = src ? this.fit(src.clone(true), p.size) : p.id === 'ai' ? this.beacon(p.size, landmark(p.id).color) : this.placeholder(p.size, landmark(p.id).color)
         holder.add(obj)
         const box = new THREE.Box3().setFromObject(obj)
         const size = box.getSize(new THREE.Vector3())
@@ -137,6 +138,40 @@ export class Landmarks {
     const m = new THREE.Mesh(geo, mat)
     m.position.y = size * 0.3
     return m
+  }
+
+  /** The one landmark with no model: a faceted glass crystal haloed by two crossed rings, for
+   *  the AI chapter. Glassy and lit from within on purpose, so it reads as "not from this hill"
+   *  against the matte painted models everywhere else. */
+  private beacon(size: number, colorHex: string): THREE.Object3D {
+    const group = new THREE.Group()
+    const color = new THREE.Color(colorHex)
+    const coreGeo = new THREE.IcosahedronGeometry(size * 0.42, 0)
+    const coreMat = new THREE.MeshStandardMaterial({
+      color: color.clone().multiplyScalar(0.55),
+      emissive: color,
+      emissiveIntensity: 1.1,
+      roughness: 0.15,
+      metalness: 0.1,
+      transparent: true,
+      opacity: 0.92,
+    })
+    const crystal = new THREE.Mesh(coreGeo, coreMat)
+    crystal.position.y = size * 0.55
+    crystal.castShadow = true
+    group.add(crystal)
+    const haloMat = new THREE.MeshStandardMaterial({ color, emissive: color, emissiveIntensity: 0.8, roughness: 0.4, metalness: 0.2 })
+    const haloGeo = new THREE.TorusGeometry(size * 0.62, size * 0.03, 8, 40)
+    const haloA = new THREE.Mesh(haloGeo, haloMat)
+    haloA.position.y = crystal.position.y
+    haloA.rotation.x = Math.PI / 2.4
+    const haloB = new THREE.Mesh(haloGeo, haloMat)
+    haloB.position.y = crystal.position.y
+    haloB.rotation.x = -Math.PI / 2.4
+    haloB.rotation.z = Math.PI / 2
+    group.add(haloA, haloB)
+    this.disposables.push(coreGeo, coreMat, haloGeo, haloMat)
+    return group
   }
 
   private plinth(physics: Physics, x: number, z: number, ground: number, radius: number, color: string): void {
