@@ -121,6 +121,9 @@ async function boot(): Promise<void> {
   game.onCaption = caption => ui.caption(caption)
   const enc = game.encounters
   const lm = game.landmarks
+  // Every visit starts the hill fresh: progress (stars, fox, chapters, the guardian) resets on
+  // load, while settings (audio, quality, sensitivity) persist.
+  save.update({ stars: [], fox: 0, awake: false, chapters: [] })
   enc.restore({ stars: save.data.stars, fox: save.data.fox, awake: save.data.awake })
   enc.onPersist = p => save.update(p)
   enc.onSound = name => audio.play(name)

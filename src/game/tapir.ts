@@ -10,8 +10,8 @@ import { terrainHeight, terrainNormal } from './terrain'
  */
 
 const UP = new THREE.Vector3(0, 1, 0)
-/** The patch it grazes (world x, z, radius). */
-export const TAPIR_AREA = { x: 11, z: 17.5, r: 3 }
+/** The patch it grazes (world x, z, radius); kept well clear of the waste truck landmark. */
+export const TAPIR_AREA = { x: 10, z: 18, r: 2.5 }
 /** Places it should not wander onto (the shoebill's stone, a baobab sprout). */
 const AVOID: [number, number, number][] = [
   [7.2, 15.2, 1.9],
@@ -185,9 +185,9 @@ export class Tapir {
     }
     this.wasNear = near
     // It has no collider, so a camera walking straight at it would otherwise clip through its
-    // head: step back once the player gets point-blank, so it keeps a little personal space.
-    if (dEye < 1.1) {
-      const push = (1.1 - dEye) * 2.4
+    // head: step back briskly once the player gets point-blank, even against a sprinter.
+    if (dEye < 1.4) {
+      const push = (1.4 - dEye) * 6
       const dx = this.pos.x - eye.x
       const dz = this.pos.z - eye.z
       const len = Math.hypot(dx, dz) || 1

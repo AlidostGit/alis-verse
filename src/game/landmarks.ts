@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { DecalGeometry } from 'three/examples/jsm/geometries/DecalGeometry.js'
 import type { Physics } from '../engine/physics'
 import type { ModelKey } from './assetTable'
 import { CONFIG, LIVE } from './config'
@@ -29,7 +30,7 @@ type Placement = {
 
 /** Where the chapters stand: a loose ring around the guardian, read clockwise from the spawn. */
 export const PLACEMENTS: readonly Placement[] = [
-  { id: 'welcome', x: 5, z: 25.7, size: 0, lift: 0, yawOffset: 0, reach: 5.5 },
+  { id: 'welcome', x: 2.6, z: 26.5, size: 0, lift: 0, yawOffset: 0, reach: 5.5 },
   { id: 'motive', model: 'retro', x: -7.8, z: 22.5, size: 2.5, lift: 0, yawOffset: -Math.PI / 2, reach: 5.5 },
   { id: 'musictribe', model: 'terminal', x: -15.5, z: 9.5, size: 2.7, lift: 0, yawOffset: -Math.PI / 2, reach: 5.5 },
   { id: 'projects', model: 'laptop', x: -12.5, z: -6.5, size: 2.4, lift: 1.1, yawOffset: -Math.PI / 2, float: true, reach: 5.5 },
@@ -299,17 +300,28 @@ export class Landmarks {
     this.reserved.push({ x, z, r: 1.8 })
   }
 
-  /** The Waste Lab's own logo, decaled onto the flat cargo-box side of the truck that faces the
-   *  meadow (measured directly on the model: local z \u2248 0.91, facing local +Z). */
+  /** The Waste Lab's own logo, projected as a true decal onto the curved cargo-box side facing
+   *  the meadow. A flat floating plane clipped into the bulging toy surface up close; the decal
+   *  projection hugs the surface instead, so it reads like a painted-on sticker from any angle. */
   private truckLogo(holder: THREE.Group): void {
+    let surface: THREE.Mesh | null = null
+    holder.traverse(o => {
+      const m = o as THREE.Mesh
+      if (m.isMesh && !surface) surface = m
+    })
+    if (!surface) return
+    holder.updateMatrixWorld(true)
+    const at = holder.localToWorld(new THREE.Vector3(-0.1, 1.76, 0.91))
+    const orient = new THREE.Euler(0, holder.rotation.y, 0)
+    const geo = new DecalGeometry(surface, at, orient, new THREE.Vector3(1.6, 1.6, 1.6))
     const tex = new THREE.TextureLoader().load('./brand/the-waste-lab-logo.png')
     tex.colorSpace = THREE.SRGBColorSpace
-    const geo = new THREE.CircleGeometry(0.85, 48)
-    const mat = new THREE.MeshLambertMaterial({ map: tex, transparent: true, alphaTest: 0.5, polygonOffset: true, polygonOffsetFactor: -4 })
+    tex.anisotropy = 4
+    const mat = new THREE.MeshLambertMaterial({ map: tex, alphaTest: 0.5, polygonOffset: true, polygonOffsetFactor: -4 })
     const decal = new THREE.Mesh(geo, mat)
-    decal.position.set(-0.1, 1.76, 0.93)
     decal.castShadow = false
-    holder.add(decal)
+    // DecalGeometry bakes world coordinates, so it joins the identity-transform landmarks group.
+    this.group.add(decal)
     this.disposables.push(geo, mat, tex)
   }
 
