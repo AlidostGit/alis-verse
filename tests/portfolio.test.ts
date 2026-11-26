@@ -15,7 +15,7 @@ describe('portfolio content', () => {
   })
   test('covers every role from the resume and LinkedIn', () => {
     const text = JSON.stringify(LANDMARKS)
-    for (const s of ['The Waste Lab', 'Music Tribe', 'House and Hedges', 'Motive', 'KeepTruckin', 'MEPCO', 'AIESEC', 'NFC Institute', 'Civil Services Preparatory School', 'Project Argo', 'Sydney Alvarez', 'Marcus Aurelius', 'Anthropic'])
+    for (const s of ['The Waste Lab', 'Music Tribe', 'House and Hedges', 'Motive', 'KeepTruckin', 'MEPCO', 'AIESEC', 'NFC Institute', 'Civil Services Preparatory School', 'Project Argo', 'Sydney Alvarez', 'Marcus Aurelius', 'Anthropic', 'Lara Hussein', 'Ceylan'])
       expect(text).toContain(s)
   })
   test('gaming and game development are presented as hobbies, not professional skills', () => {

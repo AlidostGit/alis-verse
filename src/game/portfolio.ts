@@ -283,7 +283,7 @@ export const LANDMARKS: readonly Landmark[] = [
     kicker: 'Chapter 4 · Closing the food-to-soil loop',
     heading: 'The Waste Lab',
     intro:
-      'The newest landmark, and the one with a mission: software that helps businesses divert food waste from landfill, track it with precision and turn it back into soil.',
+      'The newest landmark, and the one Ali is proudest of: software that helps businesses divert food waste from landfill, track it with precision and turn it back into soil. He cares about where this one lands.',
     story: {
       tale: 'Drivers used to log collections on paper. Paper, it turns out, has no audit trail, no search bar and no resistance to rain. So Ali shipped a driver app. Now the only thing that still gets composted is the food.',
       learned: 'Full product ownership: discovery with drivers, scope trade-offs, writing Go at noon and patching servers at midnight. Technical lead, product manager and occasional IT department, all in one hoodie.',
@@ -301,6 +301,15 @@ export const LANDMARKS: readonly Landmark[] = [
           'Led a team of engineers and wrote code to ship the products (Go, Node, Next.js, React Native, PostgreSQL, Docker), setting quality standards and making scope trade-offs.',
           'Set up the data platform and dashboards used to measure collections and report results to clients and partners.',
           'Kept production running: server patching, email security (SPF, DKIM, DMARC) and Microsoft 365 administration.',
+        ],
+      },
+      {
+        title: 'Who made this worth building',
+        org: 'Founders, The Waste Lab',
+        dates: '',
+        points: [
+          'Lara Hussein and Ceylan \u00dcren started The Waste Lab because they refused to accept that food scraps from a Dubai apartment had nowhere to go but a landfill, and built the company that proved otherwise.',
+          'They will always be an inspiration to Ali: proof that caring enough about a problem, and staying stubborn about it, is itself a legitimate business plan.',
         ],
       },
     ],
