@@ -327,7 +327,6 @@ export class Landmarks {
     root.position.set(x, ground, z)
     root.rotation.y = yaw
     slab.position.y = 0.3 + h / 2
-    slab.rotation.x = -0.06
     base.position.y = 0.1
     for (const m of [slab, base]) {
       m.castShadow = true
