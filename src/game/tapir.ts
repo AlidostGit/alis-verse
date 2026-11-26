@@ -176,13 +176,24 @@ export class Tapir {
   }
 
   update(dt: number, time: number, eye: THREE.Vector3, talking: boolean): void {
-    const near = Math.hypot(eye.x - this.pos.x, eye.z - this.pos.z) < 5.5
+    const dEye = Math.hypot(eye.x - this.pos.x, eye.z - this.pos.z)
+    const near = dEye < 5.5
     this.squeakCool = Math.max(0, this.squeakCool - dt)
     if (near && !this.wasNear && this.squeakCool === 0) {
       this.sound = 'squeak'
       this.squeakCool = 40
     }
     this.wasNear = near
+    // It has no collider, so a camera walking straight at it would otherwise clip through its
+    // head: step back once the player gets point-blank, so it keeps a little personal space.
+    if (dEye < 1.1) {
+      const push = (1.1 - dEye) * 2.4
+      const dx = this.pos.x - eye.x
+      const dz = this.pos.z - eye.z
+      const len = Math.hypot(dx, dz) || 1
+      this.pos.x += (dx / len) * push * dt
+      this.pos.z += (dz / len) * push * dt
+    }
     // ── Where to go: stop and watch when the player is near, else graze and amble ──
     let want = 0
     let turn = 0

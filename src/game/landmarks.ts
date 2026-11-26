@@ -29,7 +29,7 @@ type Placement = {
 
 /** Where the chapters stand: a loose ring around the guardian, read clockwise from the spawn. */
 export const PLACEMENTS: readonly Placement[] = [
-  { id: 'welcome', x: 3.2, z: 25.2, size: 0, lift: 0, yawOffset: 0, reach: 5.5 },
+  { id: 'welcome', x: 1.5, z: 28, size: 0, lift: 0, yawOffset: 0, reach: 5.5 },
   { id: 'motive', model: 'retro', x: -7.8, z: 22.5, size: 2.5, lift: 0, yawOffset: -Math.PI / 2, reach: 5.5 },
   { id: 'musictribe', model: 'terminal', x: -15.5, z: 9.5, size: 2.7, lift: 0, yawOffset: -Math.PI / 2, reach: 5.5 },
   { id: 'projects', model: 'laptop', x: -12.5, z: -6.5, size: 2.4, lift: 1.1, yawOffset: -Math.PI / 2, float: true, reach: 5.5 },
@@ -95,6 +95,7 @@ export class Landmarks {
         const off = Math.max(size.x, size.z) * 0.5 + 1.1
         this.signpost(p.id, p.x + fwd.x * 1.4 + right.x * off, p.z + fwd.y * 1.4 + right.y * off, yaw)
         if (p.id === 'motive') this.eldCluster(physics, p.x - right.x * (off + 0.4) + fwd.x * 0.6, p.z - right.y * (off + 0.4) + fwd.y * 0.6, yaw)
+        if (p.id === 'wastelab') this.truckLogo(holder)
       }
       this.marks.push({ id: p.id, x: p.x, z: p.z })
     }
@@ -295,6 +296,21 @@ export class Landmarks {
     this.grassMask.push({ x, z, r: 0.95 })
     this.reserved.push({ x, z, r: 1.8 })
   }
+
+  /** The Waste Lab's own logo, decaled onto the flat cargo-box side of the truck that faces the
+   *  meadow (measured directly on the model: local z \u2248 0.91, facing local +Z). */
+  private truckLogo(holder: THREE.Group): void {
+    const tex = new THREE.TextureLoader().load('./brand/the-waste-lab-logo.png')
+    tex.colorSpace = THREE.SRGBColorSpace
+    const geo = new THREE.CircleGeometry(0.85, 48)
+    const mat = new THREE.MeshLambertMaterial({ map: tex, transparent: true, alphaTest: 0.5, polygonOffset: true, polygonOffsetFactor: -4 })
+    const decal = new THREE.Mesh(geo, mat)
+    decal.position.set(-0.1, 1.76, 0.93)
+    decal.castShadow = false
+    holder.add(decal)
+    this.disposables.push(geo, mat, tex)
+  }
+
   /** The welcome stone: a carved slab with the headline, facing the spawn. */
   private buildWelcome(physics: Physics, x: number, z: number, ground: number, _yaw: number): void {
     const yaw = Math.atan2(5.5 - x, 30 - z)
