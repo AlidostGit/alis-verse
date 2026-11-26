@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import type { Physics } from '../engine/physics'
 import type { ModelKey } from './assetTable'
-import { LIVE } from './config'
+import { CONFIG, LIVE } from './config'
 import { LANDMARKS, PROFILE, landmark, type LandmarkId } from './portfolio'
 import type { Circle } from './props'
 import { terrainHeight } from './terrain'
@@ -29,7 +29,7 @@ type Placement = {
 
 /** Where the chapters stand: a loose ring around the guardian, read clockwise from the spawn. */
 export const PLACEMENTS: readonly Placement[] = [
-  { id: 'welcome', x: 1.5, z: 28, size: 0, lift: 0, yawOffset: 0, reach: 5.5 },
+  { id: 'welcome', x: 5, z: 25.7, size: 0, lift: 0, yawOffset: 0, reach: 5.5 },
   { id: 'motive', model: 'retro', x: -7.8, z: 22.5, size: 2.5, lift: 0, yawOffset: -Math.PI / 2, reach: 5.5 },
   { id: 'musictribe', model: 'terminal', x: -15.5, z: 9.5, size: 2.7, lift: 0, yawOffset: -Math.PI / 2, reach: 5.5 },
   { id: 'projects', model: 'laptop', x: -12.5, z: -6.5, size: 2.4, lift: 1.1, yawOffset: -Math.PI / 2, float: true, reach: 5.5 },
@@ -64,7 +64,9 @@ export class Landmarks {
       const ground = terrainHeight(p.x, p.z)
       const yaw = Math.atan2(FACE.x - p.x, FACE.y - p.z) + p.yawOffset
       if (p.id === 'welcome') {
-        this.buildWelcome(physics, p.x, p.z, ground, yaw)
+        // Square to the player's own spawn orientation, not the meadow-facing convention every
+        // other landmark uses: it is a few steps away, not a monument to walk around.
+        this.buildWelcome(physics, p.x, p.z, ground, CONFIG.player.spawnYaw)
       } else {
         const src = p.model ? models[p.model] : undefined
         const holder = new THREE.Group()
@@ -311,9 +313,10 @@ export class Landmarks {
     this.disposables.push(geo, mat, tex)
   }
 
-  /** The welcome stone: a carved slab with the headline, facing the spawn. */
-  private buildWelcome(physics: Physics, x: number, z: number, ground: number, _yaw: number): void {
-    const yaw = Math.atan2(5.5 - x, 30 - z)
+  /** The welcome stone: a carved slab with the headline, squared to the player's own spawn
+   *  orientation (not the meadow-facing convention every other landmark uses), so it reads
+   *  flat and undistorted right where the visitor lands, facing them and not the guardian. */
+  private buildWelcome(physics: Physics, x: number, z: number, ground: number, yaw: number): void {
     const w = 3.1
     const h = 1.85
     const stone = new THREE.MeshLambertMaterial({ color: new THREE.Color(0.66, 0.64, 0.6) })

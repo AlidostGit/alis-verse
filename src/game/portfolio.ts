@@ -81,7 +81,7 @@ export const LANDMARKS: readonly Landmark[] = [
         points: [
           'Electrical engineer who discovered that fixing a classmate\u2019s laptop and fixing a Fortune 500 integration use the exact same muscle: listen first, then simplify.',
           'Five roles, one belief underneath all of them: systems do not fail, people do, so build the system that makes the right thing the easy thing.',
-          'Picked problems over titles. Has been a lecturer, a QA analyst, a support lead and a product owner, roughly in that order, because each one taught the next.',
+          'Picked problems over titles. Has been a lecturer, a QA analyst, a Developer Support Lead Engineer and a product owner, roughly in that order, because each one taught the next.',
           'Still answers messages at odd hours, because the waste truck does not wait for a sprint planning meeting.',
         ],
       },
@@ -145,16 +145,6 @@ export const LANDMARKS: readonly Landmark[] = [
           'Developed B2B prospects and met potential sponsors.',
           'Built digital marketing strategies for existing sponsors.',
           'Led teams, built them and delegated responsibilities.',
-        ],
-      },
-      {
-        title: 'Visiting Lecturer',
-        org: 'Civil Services Preparatory School (CSPs)',
-        dates: 'Oct 2020 - Dec 2021',
-        place: 'Islamabad, Pakistan',
-        points: [
-          'Taught Current Affairs, US History and Pakistan Affairs with easy-to-learn modules.',
-          'Created digital content, infographics and SEO-tracked website content.',
         ],
       },
     ],
